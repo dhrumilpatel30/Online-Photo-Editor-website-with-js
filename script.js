@@ -4,11 +4,6 @@ let choose_img_Btn = document.querySelector(".choose_img button");
 let choose_Input = document.querySelector(".choose_img input");
 let imgSrc = document.querySelector(".view_img img");
 
-
-// let slider = document.querySelector(".slider input");
-// let filter_name = document.querySelector(".filter_info .name");
-// let slider_value = document.querySelector(".filter_info .value");
-// let rotate_btns = document.querySelectorAll(".icons_room1 button");
 let reset = document.querySelector("#reset");
 let save = document.querySelector("#save");
 
@@ -44,19 +39,37 @@ $(".try").click(
 //code for save image button
 save.addEventListener("click", () => {
   let canvas = document.createElement("canvas");
-  let ctx = canvas.getContext("2d");
-  canvas.width = imgSrc.naturalWidth;
-  canvas.height = imgSrc.naturalHeight;
-  ctx.filter = `brightness(${brightness}%) contrast(${contrast}%) saturate(${saturate}%) invert(${invert}%) blur(${blur}px)`;
+  let ctx = canvas.getContext("2d"); if (rotate % 180 == 0) {
+    canvas.width = imgSrc.naturalWidth;
+    canvas.height = imgSrc.naturalHeight;
+  }
+  else {
+    canvas.width = imgSrc.naturalHeight;
+    canvas.height = imgSrc.naturalWidth;
+  }
+
+  ctx.filter = `brightness(${brightness}%) contrast(${contrast}%) saturate(${saturate}%) invert(${invert}%) blur(${blur1}px)`;
   ctx.translate(canvas.width / 2, canvas.height / 2);
+  ctx.rotate(rotate * Math.PI / 180);
   ctx.scale(flip_x, flip_y);
-  ctx.drawImage(
-    imgSrc,
-    -canvas.width / 2,
-    -canvas.height / 2,
-    canvas.width,
-    canvas.height
-  );
+  if (rotate % 180 == 0) {
+    ctx.drawImage(
+      imgSrc,
+      -canvas.width / 2,
+      -canvas.height / 2,
+      canvas.width,
+      canvas.height
+    );
+  }
+  else {
+    ctx.drawImage(
+      imgSrc,
+      -canvas.height / 2,
+      -canvas.width / 2,
+      canvas.height,
+      canvas.width
+    );
+  }
   const link = document.createElement("a");
   link.download = "you_image_edited.jpg";
   link.href = canvas.toDataURL();
@@ -66,16 +79,30 @@ save.addEventListener("click", () => {
 //code for reset button
 reset.addEventListener("click", () => {
   brightness = "100";
-  $(".Brightness").children(".value").text(brightness + "%");
   saturate = "100";
   contrast = "100";
   invert = "0";
   blur1 = "0";
-  rotate = 0;
+  grayscale = 0,
+    rotate = 0;
   flip_x = 1;
   flip_y = 1;
+  //reseting lable text
+  $(".Brightness").children(".value").text(brightness + "%");
+  $(".saturation").children(".value").text(saturate + "%");
+  $(".contrast").children(".value").text(contrast + "%");
+  $(".grayscale").children(".value").text(grayscale + "%");
+  $(".invert").children(".value").text(invert + "%");
+  $(".blur").children(".value").text(blur1 + "%");
+  //reseting sliders
+  $(".Brightness").children("input").val(brightness);
+  $(".saturation").children("input").val(saturate);
+  $(".contrast").children("input").val(contrast);
+  $(".grayscale").children("input").val(grayscale);
+  $(".invert").children("input").val(invert);
+  $(".blur").children("input").val(blur1);
   imgSrc.style.transform = `rotate(${rotate}deg) scale(${flip_x}, ${flip_y})`;
-  imgSrc.style.filter = `brightness(${brightness}%) contrast(${contrast}%) saturate(${saturate}%) invert(${invert}%) blur(${blur}px)`;
+  imgSrc.style.filter = `brightness(${brightness}%) contrast(${contrast}%) saturate(${saturate}%) invert(${invert}%) blur(${blur1}px)`;
 });
 
 //code for filters
@@ -129,10 +156,33 @@ $(".invert").children("input").change(
 //blur
 $(".blur").children("input").change(
   () => {
-    blur = $(".blur").children("input").val();
-    $(".blur").children(".value").text(blur + "%");
+    blur1 = $(".blur").children("input").val();
+    $(".blur").children(".value").text(blur1 + "%");
     imgSrc.style.filter = `brightness(${brightness}%) contrast(${contrast}%) saturate(${saturate}%) invert(${invert}%) blur(${blur1}px) grayscale(${grayscale / 100})`;
   }
 );
 
+//rotate buttons
+$("#rotate_left").click(
+  () => {
+    rotate -= 90;
+    imgSrc.style.transform = `rotate(${rotate}deg) scale(${flip_x}, ${flip_y})`;
+  });
 
+$("#rotate_right").click(
+  () => {
+    rotate += 90;
+    imgSrc.style.transform = `rotate(${rotate}deg) scale(${flip_x}, ${flip_y})`;
+  });
+
+$("#flip_x").click(
+  () => {
+    flip_x = flip_x * (-1);
+    imgSrc.style.transform = `rotate(${rotate}deg) scale(${flip_x}, ${flip_y})`;
+  });
+
+$("#flip_y").click(
+  () => {
+    flip_y = flip_y * (-1);
+    imgSrc.style.transform = `rotate(${rotate}deg) scale(${flip_x}, ${flip_y})`;
+  });
