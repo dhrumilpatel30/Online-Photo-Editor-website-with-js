@@ -16,7 +16,11 @@ let brightness = 100,
   grayscale = 0,
   rotate = 0,
   flip_x = 1,
-  flip_y = 1;
+  flip_y = 1,
+  from_t = 0,
+  from_b = 0,
+  from_l = 0,
+  from_r = 0;
 
 //code for upload image button
 choose_img_Btn.addEventListener("click", () => choose_Input.click());
@@ -118,7 +122,7 @@ $(".Brightness").children("input").click(
 );
 
 //saturation
-$(".saturation").children("input").click(
+$(".saturation").children("input").change(
   () => {
     saturate = $(".saturation").children("input").val();
     $(".saturation").children(".value").text(saturate + "%");
@@ -127,7 +131,7 @@ $(".saturation").children("input").click(
 );
 
 //contrast
-$(".contrast").children("input").click(
+$(".contrast").children("input").change(
   () => {
     contrast = $(".contrast").children("input").val();
     $(".contrast").children(".value").text(contrast + "%");
@@ -136,7 +140,7 @@ $(".contrast").children("input").click(
 );
 
 //grayscale
-$(".grayscale").children("input").click(
+$(".grayscale").children("input").change(
   () => {
     grayscale = $(".grayscale").children("input").val();
     $(".grayscale").children(".value").text(grayscale + "%");
@@ -145,7 +149,7 @@ $(".grayscale").children("input").click(
 );
 
 //invert
-$(".invert").children("input").click(
+$(".invert").children("input").change(
   () => {
     invert = $(".invert").children("input").val();
     $(".invert").children(".value").text(invert + "%");
@@ -154,7 +158,7 @@ $(".invert").children("input").click(
 );
 
 //blur
-$(".blur").children("input").click(
+$(".blur").children("input").change(
   () => {
     blur1 = $(".blur").children("input").val();
     $(".blur").children(".value").text(blur1 + "%");
@@ -186,3 +190,37 @@ $("#flip_y").click(
     flip_y = flip_y * (-1);
     imgSrc.style.transform = `rotate(${rotate}deg) scale(${flip_x}, ${flip_y})`;
   });
+
+//crop Image
+
+$(".from_top").children("input").change(
+  () => {
+    from_t = $(".from_top").children("input").val();
+    $(".from_bottom").children("input").attr("max", 100 - from_t);
+    $(".from_top").children(".value").text(from_t + "%");
+  }
+);
+
+$(".from_bottom").children("input").change(
+  () => {
+    from_b = $(".from_bottom").children("input").val();
+    $(".from_top").children("input").attr("max", 100 - from_b);
+    $(".from_bottom").children(".value").text(from_b + "%");
+  }
+);
+
+$(".from_left").children("input").change(
+  () => {
+    from_l = $(".from_left").children("input").val();
+    $(".from_right").children("input").attr("max", 100 - from_l);
+    $(".from_left").children(".value").text(from_l + "%");
+  }
+);
+
+$(".from_right").children("input").change(
+  () => {
+    from_r = $(".from_right").children("input").val();
+    $(".from_left").children("input").attr("max", 100 - from_r);
+    $(".from_right").children(".value").text(from_r + "%");
+  }
+);

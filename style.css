@@ -1,7 +1,20 @@
+/*font of webite*/
+@font-face {
+    font-family: 'Sono';
+    src: url(fonts/Sono-Medium.ttf);
+}
+@font-face {
+    font-family: 'Sono';
+    src: url(fonts/Sono-SemiBold.ttf);
+    font-weight: bold;
+}
+
+
 * {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+    font-family: 'Sono', sans-serif;
 }
 
 body {
@@ -10,7 +23,7 @@ body {
     display: grid;
     padding-top: 2rem;
     overflow: hidden;
-    text-decoration: none   ;
+    text-decoration: none;
 }
 
 @media (max-width: 1400px) and (min-width:1200px) {
@@ -27,8 +40,12 @@ body {
 h1 {
     display: flex;
     justify-content: center;
+    font-weight: bold;
 }
-
+.link a{
+    text-decoration: none !important;
+    color: white !important;
+}
 .btns_save {
     display: flex;
     justify-content: space-around;
@@ -56,11 +73,14 @@ h1 {
     justify-content: space-around;
 }
 
-.room1 button,
-.room2 button {
+.room1 button{
     font-size: 1rem;
 }
 
+.disabled img{
+    opacity: 0.4;
+    object-fit: cover;
+}
 .disabled .filters {
     pointer-events: none;
     opacity: .5;
@@ -72,11 +92,6 @@ h1 {
 }
 
 .disabled .room1 {
-    pointer-events: none;
-    opacity: .5;
-}
-
-.disabled .room2 {
     pointer-events: none;
     opacity: .5;
 }
