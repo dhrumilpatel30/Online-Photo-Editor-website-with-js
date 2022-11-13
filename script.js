@@ -109,7 +109,7 @@ reset.addEventListener("click", () => {
 
 
 //brightness
-$(".Brightness").children("input").change(
+$(".Brightness").children("input").click(
   () => {
     brightness = $(".Brightness").children("input").val();
     $(".Brightness").children(".value").text(brightness + "%");
@@ -118,7 +118,7 @@ $(".Brightness").children("input").change(
 );
 
 //saturation
-$(".saturation").children("input").change(
+$(".saturation").children("input").click(
   () => {
     saturate = $(".saturation").children("input").val();
     $(".saturation").children(".value").text(saturate + "%");
@@ -127,7 +127,7 @@ $(".saturation").children("input").change(
 );
 
 //contrast
-$(".contrast").children("input").change(
+$(".contrast").children("input").click(
   () => {
     contrast = $(".contrast").children("input").val();
     $(".contrast").children(".value").text(contrast + "%");
@@ -136,7 +136,7 @@ $(".contrast").children("input").change(
 );
 
 //grayscale
-$(".grayscale").children("input").change(
+$(".grayscale").children("input").click(
   () => {
     grayscale = $(".grayscale").children("input").val();
     $(".grayscale").children(".value").text(grayscale + "%");
@@ -145,7 +145,7 @@ $(".grayscale").children("input").change(
 );
 
 //invert
-$(".invert").children("input").change(
+$(".invert").children("input").click(
   () => {
     invert = $(".invert").children("input").val();
     $(".invert").children(".value").text(invert + "%");
@@ -154,7 +154,7 @@ $(".invert").children("input").change(
 );
 
 //blur
-$(".blur").children("input").change(
+$(".blur").children("input").click(
   () => {
     blur1 = $(".blur").children("input").val();
     $(".blur").children(".value").text(blur1 + "%");
