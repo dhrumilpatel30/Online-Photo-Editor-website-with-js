@@ -22,28 +22,39 @@ let brightness = 100,
   from_l = 0,
   from_r = 0;
 
+
+let img_w_f, img_h_f, int_img;
+
+
 //code for upload image button
 choose_img_Btn.addEventListener("click", () => choose_Input.click());
 choose_Input.addEventListener("change", () => {
   let file = choose_Input.files[0];
   if (!file) return;
   imgSrc.src = URL.createObjectURL(file);
+  int_img = imgSrc.src;
+  img_w_f = imgSrc.naturalWidth / 100;
+  img_h_f = imgSrc.naturalHeight / 100;
   imgSrc.addEventListener("load", () => {
     document.querySelector(".container-fluid").classList.remove("disabled");
   });
 });
 
+
 //code for Try image option
-$(".try").click(
-  () => {
-    $(".view_img").children("img").attr("src", "images/brewer_pub_london-wallpaper-1920x1080.jpg")
-    document.querySelector(".container-fluid").classList.remove("disabled");
-  }
-)
+// $(".try").click(
+//   () => {
+//     $(".view_img").children("img").attr("src", "images/brewer_pub_london-wallpaper-1920x1080.jpg")
+//     document.querySelector(".container-fluid").classList.remove("disabled");
+//   }
+// )
 //code for save image button
+
+
 save.addEventListener("click", () => {
   let canvas = document.createElement("canvas");
-  let ctx = canvas.getContext("2d"); if (rotate % 180 == 0) {
+  let ctx = canvas.getContext("2d");
+  if (rotate % 180 == 0) {
     canvas.width = imgSrc.naturalWidth;
     canvas.height = imgSrc.naturalHeight;
   }
@@ -80,6 +91,8 @@ save.addEventListener("click", () => {
   link.click();
 });
 
+
+
 //code for reset button
 reset.addEventListener("click", () => {
   brightness = "100";
@@ -87,10 +100,15 @@ reset.addEventListener("click", () => {
   contrast = "100";
   invert = "0";
   blur1 = "0";
-  grayscale = 0,
-    rotate = 0;
+  grayscale = 0;
+  rotate = 0;
   flip_x = 1;
   flip_y = 1;
+  from_t = 0;
+  from_l = 0;
+  from_r = 0;
+  from_b = 0;
+
   //reseting lable text
   $(".Brightness").children(".value").text(brightness + "%");
   $(".saturation").children(".value").text(saturate + "%");
@@ -107,6 +125,7 @@ reset.addEventListener("click", () => {
   $(".blur").children("input").val(blur1);
   imgSrc.style.transform = `rotate(${rotate}deg) scale(${flip_x}, ${flip_y})`;
   imgSrc.style.filter = `brightness(${brightness}%) contrast(${contrast}%) saturate(${saturate}%) invert(${invert}%) blur(${blur1}px)`;
+  cropimg();
 });
 
 //code for filters
@@ -122,7 +141,7 @@ $(".Brightness").children("input").click(
 );
 
 //saturation
-$(".saturation").children("input").change(
+$(".saturation").children("input").click(
   () => {
     saturate = $(".saturation").children("input").val();
     $(".saturation").children(".value").text(saturate + "%");
@@ -131,7 +150,7 @@ $(".saturation").children("input").change(
 );
 
 //contrast
-$(".contrast").children("input").change(
+$(".contrast").children("input").click(
   () => {
     contrast = $(".contrast").children("input").val();
     $(".contrast").children(".value").text(contrast + "%");
@@ -140,7 +159,7 @@ $(".contrast").children("input").change(
 );
 
 //grayscale
-$(".grayscale").children("input").change(
+$(".grayscale").children("input").click(
   () => {
     grayscale = $(".grayscale").children("input").val();
     $(".grayscale").children(".value").text(grayscale + "%");
@@ -149,7 +168,7 @@ $(".grayscale").children("input").change(
 );
 
 //invert
-$(".invert").children("input").change(
+$(".invert").children("input").click(
   () => {
     invert = $(".invert").children("input").val();
     $(".invert").children(".value").text(invert + "%");
@@ -158,7 +177,7 @@ $(".invert").children("input").change(
 );
 
 //blur
-$(".blur").children("input").change(
+$(".blur").children("input").click(
   () => {
     blur1 = $(".blur").children("input").val();
     $(".blur").children(".value").text(blur1 + "%");
@@ -193,11 +212,49 @@ $("#flip_y").click(
 
 //crop Image
 
+function cropimg() {
+  imgSrc.src = int_img;
+  canvas = document.createElement("canvas");
+  ctx = canvas.getContext("2d");
+  if (rotate % 180 == 0) {
+    canvas.width = imgSrc.naturalWidth - (from_l + from_r) * img_w_f;
+    canvas.height = imgSrc.naturalHeight - (from_t + from_b) * img_h_f;
+  }
+  else {
+    canvas.width = imgSrc.naturalHeight - (from_t + from_b) * img_h_f;
+    canvas.height = imgSrc.naturalWidth - (from_l + from_r) * img_w_f;
+  }
+  ctx.filter = `brightness(${brightness}%) contrast(${contrast}%) saturate(${saturate}%) invert(${invert}%) blur(${blur1}px)`;
+  ctx.translate(canvas.width / 2, canvas.height / 2);
+  ctx.rotate(rotate * Math.PI / 180);
+  ctx.scale(flip_x, flip_y);
+  if (rotate % 180 == 0) {
+    ctx.drawImage(
+      imgSrc,
+      -canvas.width / 2 + from_l * img_w_f,
+      -canvas.height / 2 + from_t * img_h_f,
+      canvas.width,
+      canvas.height
+    );
+  }
+  else {
+    ctx.drawImage(
+      imgSrc,
+      -canvas.height / 2 + from_t * img_h_f,
+      -canvas.width / 2 + from_l * img_w_f,
+      canvas.height,
+      canvas.width
+    );
+  }
+  imgSrc.src = canvas.toDataURL();
+}
+
 $(".from_top").children("input").change(
   () => {
     from_t = $(".from_top").children("input").val();
     $(".from_bottom").children("input").attr("max", 100 - from_t);
     $(".from_top").children(".value").text(from_t + "%");
+    cropimg();
   }
 );
 
@@ -206,6 +263,7 @@ $(".from_bottom").children("input").change(
     from_b = $(".from_bottom").children("input").val();
     $(".from_top").children("input").attr("max", 100 - from_b);
     $(".from_bottom").children(".value").text(from_b + "%");
+    cropimg();
   }
 );
 
@@ -214,6 +272,7 @@ $(".from_left").children("input").change(
     from_l = $(".from_left").children("input").val();
     $(".from_right").children("input").attr("max", 100 - from_l);
     $(".from_left").children(".value").text(from_l + "%");
+    cropimg();
   }
 );
 
@@ -222,5 +281,6 @@ $(".from_right").children("input").change(
     from_r = $(".from_right").children("input").val();
     $(".from_left").children("input").attr("max", 100 - from_r);
     $(".from_right").children(".value").text(from_r + "%");
+    cropimg();
   }
 );
