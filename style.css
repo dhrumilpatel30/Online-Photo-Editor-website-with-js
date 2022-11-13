@@ -10,6 +10,7 @@ body {
     display: grid;
     padding-top: 2rem;
     overflow: hidden;
+    text-decoration: none   ;
 }
 
 @media (max-width: 1400px) and (min-width:1200px) {
@@ -55,6 +56,11 @@ h1 {
     justify-content: space-around;
 }
 
+.room1 button,
+.room2 button {
+    font-size: 1rem;
+}
+
 .disabled .filters {
     pointer-events: none;
     opacity: .5;
@@ -73,4 +79,10 @@ h1 {
 .disabled .room2 {
     pointer-events: none;
     opacity: .5;
+}
+
+.disabled .crop {
+    pointer-events: none;
+    opacity: .5;
+
 }
