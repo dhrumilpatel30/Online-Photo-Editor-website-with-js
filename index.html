@@ -19,27 +19,31 @@
       <div class="col-xl-6">
         <div class="choose_img">
           <button class="btn btn-dark">choose Image to Edit</button>
-          <button class="try btn btn-primary">Find Source Code(Github)</button>
+          <button class="btn btn-primary link"><a
+              href="https://github.com/dhrumilpatel30/Online-Photo-Editor-website-with-js" target="_blank">Source
+              Code(Github)</a></button>
           <input type="file" name="" id="" accept="image/*" hidden />
         </div>
       </div>
+      <br>
       <div class="col-xl-6">
         <div class="btns_save">
           <button id="reset" class="btn btn-danger">reset filter</button>
           <button id="save" class="btn btn-success">save image</button>
         </div>
       </div>
+      <br>
       <div class="col-xl-6">
         <div class="view_img">
-          <img src="" alt="" />
+          <img src="https://www.01net.com/app/uploads/2020/12/MEA-Photos-App-windows-10-1.jpg" alt="" />
         </div>
       </div>
       <div class="col-xl-6 editor_part">
         <div class="row filters">
           <h2>Filters</h2>
           <div class="col-6">
-            <div class="Brightness">
-              <span class="name">Brightness</span>
+            <div class="brightness">
+              <span class="name">Brightess</span>
               <span class="value">100%</span>
               <input type="range" class="form-range" max="200" min="0" value="100" />
             </div>
@@ -77,11 +81,38 @@
           <h2>rotate & flip</h2>
           <button class="btn btn-primary btn-lg btn-block" title="rotate_left" id="rotate_left">Rotate Left</button>
           <button class="btn btn-primary btn-lg btn-block" title=" rotate_right" id="rotate_right">Rotate Right</button>
-        </div>
-        <br>
-        <div class="room2">
           <button class="btn btn-primary btn-lg btn-block" title=" flip_x" id="flip_x">Flip Image Horizontal</button>
           <button class="btn btn-primary btn-lg btn-block" title=" flip_y" id="flip_y">Flip Image Vertical</button>
+        </div>
+        <br>
+        <div class="crop"><div class="row filters">
+          <h2>Filters</h2>
+          <div class="col-6">
+            <div class="from_top">
+              <span class="name">From Top</span>
+              <span class="value">0%</span>
+              <input type="range" class="form-range" max="100" min="0" value="0" />
+            </div>
+            <div class="from_bottom">
+              <span class="name">From Bottom</span>
+              <span class="value">0%</span>
+              <input type="range" class="form-range" max="100" min="0" value="0" />
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="from_left">
+              <span class="name">From Left</span>
+              <span class="value">0%</span>
+              <input type="range" class="form-range" max="100" min="0" value="0" />
+            </div>
+            <div class="from_right">
+              <span class="name">From Right</span>
+              <span class="value">0%</span>
+              <input type="range" class="form-range" max="100" min="0" value="0" />
+            </div>
+          </div>
+        </div>
+
         </div>
       </div>
     </div>
