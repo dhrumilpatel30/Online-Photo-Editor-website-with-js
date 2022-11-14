@@ -110,21 +110,21 @@ reset.addEventListener("click", () => {
   from_b = 0;
 
   //reseting lable text
-  $(".Brightness").children(".value").text(brightness + "%");
+  $(".brightness").children(".value").text(brightness + "%");
   $(".saturation").children(".value").text(saturate + "%");
   $(".contrast").children(".value").text(contrast + "%");
   $(".grayscale").children(".value").text(grayscale + "%");
   $(".invert").children(".value").text(invert + "%");
   $(".blur").children(".value").text(blur1 + "%");
   //reseting sliders
-  $(".Brightness").children("input").val(brightness);
+  $(".brightness").children("input").val(brightness);
   $(".saturation").children("input").val(saturate);
   $(".contrast").children("input").val(contrast);
   $(".grayscale").children("input").val(grayscale);
   $(".invert").children("input").val(invert);
   $(".blur").children("input").val(blur1);
   imgSrc.style.transform = `rotate(${rotate}deg) scale(${flip_x}, ${flip_y})`;
-  imgSrc.style.filter = `brightness(${brightness}%) contrast(${contrast}%) saturate(${saturate}%) invert(${invert}%) blur(${blur1}px)`;
+  imgSrc.style.filter = `brightness(${brightness}%) contrast(${contrast}%) saturate(${saturate}%) invert(${invert}%) blur(${blur1}px) grayscale(${grayscale / 100})`;
   cropimg();
 });
 
@@ -132,10 +132,10 @@ reset.addEventListener("click", () => {
 
 
 //brightness
-$(".Brightness").children("input").click(
+$(".brightness").children("input").click(
   () => {
-    brightness = $(".Brightness").children("input").val();
-    $(".Brightness").children(".value").text(brightness + "%");
+    brightness = $(".brightness").children("input").val();
+    $(".brightness").children(".value").text(brightness + "%");
     imgSrc.style.filter = `brightness(${brightness}%) contrast(${contrast}%) saturate(${saturate}%) invert(${invert}%) blur(${blur1}px) grayscale(${grayscale / 100})`;
   }
 );
@@ -209,78 +209,3 @@ $("#flip_y").click(
     flip_y = flip_y * (-1);
     imgSrc.style.transform = `rotate(${rotate}deg) scale(${flip_x}, ${flip_y})`;
   });
-
-//crop Image
-
-function cropimg() {
-  imgSrc.src = int_img;
-  canvas = document.createElement("canvas");
-  ctx = canvas.getContext("2d");
-  if (rotate % 180 == 0) {
-    canvas.width = imgSrc.naturalWidth - (from_l + from_r) * img_w_f;
-    canvas.height = imgSrc.naturalHeight - (from_t + from_b) * img_h_f;
-  }
-  else {
-    canvas.width = imgSrc.naturalHeight - (from_t + from_b) * img_h_f;
-    canvas.height = imgSrc.naturalWidth - (from_l + from_r) * img_w_f;
-  }
-  ctx.filter = `brightness(${brightness}%) contrast(${contrast}%) saturate(${saturate}%) invert(${invert}%) blur(${blur1}px)`;
-  ctx.translate(canvas.width / 2, canvas.height / 2);
-  ctx.rotate(rotate * Math.PI / 180);
-  ctx.scale(flip_x, flip_y);
-  if (rotate % 180 == 0) {
-    ctx.drawImage(
-      imgSrc,
-      -canvas.width / 2 + from_l * img_w_f,
-      -canvas.height / 2 + from_t * img_h_f,
-      canvas.width,
-      canvas.height
-    );
-  }
-  else {
-    ctx.drawImage(
-      imgSrc,
-      -canvas.height / 2 + from_t * img_h_f,
-      -canvas.width / 2 + from_l * img_w_f,
-      canvas.height,
-      canvas.width
-    );
-  }
-  imgSrc.src = canvas.toDataURL();
-}
-
-$(".from_top").children("input").change(
-  () => {
-    from_t = $(".from_top").children("input").val();
-    $(".from_bottom").children("input").attr("max", 100 - from_t);
-    $(".from_top").children(".value").text(from_t + "%");
-    cropimg();
-  }
-);
-
-$(".from_bottom").children("input").change(
-  () => {
-    from_b = $(".from_bottom").children("input").val();
-    $(".from_top").children("input").attr("max", 100 - from_b);
-    $(".from_bottom").children(".value").text(from_b + "%");
-    cropimg();
-  }
-);
-
-$(".from_left").children("input").change(
-  () => {
-    from_l = $(".from_left").children("input").val();
-    $(".from_right").children("input").attr("max", 100 - from_l);
-    $(".from_left").children(".value").text(from_l + "%");
-    cropimg();
-  }
-);
-
-$(".from_right").children("input").change(
-  () => {
-    from_r = $(".from_right").children("input").val();
-    $(".from_left").children("input").attr("max", 100 - from_r);
-    $(".from_right").children(".value").text(from_r + "%");
-    cropimg();
-  }
-);
