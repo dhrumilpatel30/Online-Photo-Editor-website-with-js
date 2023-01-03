@@ -22,5 +22,6 @@ Project is created with:
 * Bootstrap
 
 ## Preview:
-![Image of landing page](ss1.png)
+![Image of landing page](screenshots/ss1.png)
+![Image of Progressing](screenshots/ss2.png)
 
