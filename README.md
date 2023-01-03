@@ -2,10 +2,10 @@
 ## Table of contents
 * [General info](#general-info)
 * [Usage](#Usage)
-* [Technologies](#technologies)
-* [Setup](#setup)
+* [Technologies](#technologies-used)
+* [Some screenshots](#Preview)
 
-## General info
+## General info:
 This project is simple static website made from js.
 This website has main basic functionality needed for photo editor.
 
@@ -21,4 +21,6 @@ Project is created with:
 * jQuery
 * Bootstrap
 
+## Preview:
+![Image of landing page](ss1.png)
 
