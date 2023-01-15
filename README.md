@@ -1,4 +1,7 @@
 # Online-Photo-Editor-website-with-js
+
+Any suggestion regarding updates are welcome
+and features addition like crop image and ai beutify will also be added soon.
 ## Table of contents
 * [General info](#general-info)
 * [Usage](#Usage)
